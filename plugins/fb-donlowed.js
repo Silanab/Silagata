@@ -9,14 +9,25 @@ const handler = async (m, {conn, args, command, usedPrefix}) => {
   const tradutor = _translate.plugins.descargas_facebook;
   
   const whatsappChannelLink = 'https://whatsapp.com/channel/0029VacrIfU3LdQdklKFR419'; // رابط قناتك على الواتساب
+  const imageLink = 'https://telegra.ph/file/f0cf8100d684d80d48c27.jpg'; // رابط الصورة
 
   if (!args[0]) {
-    throw `_*${tradutor.texto1[0]}*_\n\n*${tradutor.texto1[1]}*\n\n*${tradutor.texto1[2]}* _${usedPrefix + command} https://fb.watch/fOTpgn6UFQ/_\n\nتابع قناتي على الواتساب هنا: ${whatsappChannelLink}`;
+    await m.reply(`_*${tradutor.texto1[0]}*_\n\n*${tradutor.texto1[1]}*\n\n*${tradutor.texto1[2]}* _${usedPrefix + command} https://fb.watch/fOTpgn6UFQ/_\n\nتابع قناتي على الواتساب هنا: ${whatsappChannelLink}`);
+    await conn.sendMessage(m.chat, {
+      image: { url: imageLink }, // إرسال الصورة من الرابط
+      caption: 'هذه الصورة التي طلبتها.'
+    }, {quoted: m});
+    return;
   }
 
   /*const linkface = await isValidFacebookLink(args[0]);
   if (!linkface) {
-    throw `_*${tradutor.texto2[0]}*_\n\n*${tradutor.texto2[1]}*\n\n*${tradutor.texto2[2]}* _${usedPrefix + command} https://fb.watch/fOTpgn6UFQ/_\n\nتابع قناتي على الواتساب هنا: ${whatsappChannelLink}`;
+    await m.reply(`_*${tradutor.texto2[0]}*_\n\n*${tradutor.texto2[1]}*\n\n*${tradutor.texto2[2]}* _${usedPrefix + command} https://fb.watch/fOTpgn6UFQ/_\n\nتابع قناتي على الواتساب هنا: ${whatsappChannelLink}`);
+    await conn.sendMessage(m.chat, {
+      image: { url: imageLink }, // إرسال الصورة من الرابط
+      caption: 'هذه الصورة التي طلبتها.'
+    }, {quoted: m});
+    return;
   }*/
 
   if (!enviando) enviando = true;
@@ -33,6 +44,13 @@ const handler = async (m, {conn, args, command, usedPrefix}) => {
         filename: 'video.mp4', 
         caption: `_*${tradutor.texto4}*_\n\nتابع قناتي على الواتساب هنا: ${whatsappChannelLink}`
       }, {quoted: m});
+      
+      // إرسال الصورة بعد إرسال الفيديو
+      await conn.sendMessage(m.chat, {
+        image: { url: imageLink }, // إرسال الصورة من الرابط
+        caption: 'هذه الصورة التي طلبتها.'
+      }, {quoted: m});
+      
       enviando = false;
     } else {
       console.error('Failed to fetch video data from API:', data);
@@ -41,7 +59,10 @@ const handler = async (m, {conn, args, command, usedPrefix}) => {
   } catch (error) {
     console.error('Error occurred:', error);
     enviando = false;
-    throw `_*${tradutor.texto5}*_\n\nتابع قناتي على الواتساب هنا: ${whatsappChannelLink}`;
+    await conn.sendMessage(m.chat, {
+      image: { url: imageLink }, // إرسال الصورة من الرابط
+      caption: `_*${tradutor.texto5}*_ \n\nتابع قناتي على الواتساب هنا: ${whatsappChannelLink}`
+    }, {quoted: m});
   }
 };
 
