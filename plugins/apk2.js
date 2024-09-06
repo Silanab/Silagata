@@ -18,6 +18,6 @@ let handler = async (m, { conn, text }) => {
 };
 
 handler.command = handler.help = ["apk2"];
-handler.tags = ["tools"];
+handler.tags = ["التطبيقات"];
 
 export default handler;
