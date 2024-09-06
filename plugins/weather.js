@@ -28,7 +28,7 @@ let handler = async (m, { args }) => {
 };
 
 handler.help = ['climate'];
-handler.tags = ['tools'];
+handler.tags = ['الطقس'];
 handler.command = /^(climate|weather)$/i;
 
 export default handler;
